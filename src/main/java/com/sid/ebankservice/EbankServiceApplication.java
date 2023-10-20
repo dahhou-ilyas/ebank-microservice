@@ -3,6 +3,8 @@ package com.sid.ebankservice;
 import com.sid.ebankservice.entities.BankAccount;
 import com.sid.ebankservice.enums.AccountType;
 import com.sid.ebankservice.repositories.BankAccountRepositories;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -32,6 +34,14 @@ public class EbankServiceApplication {
                 bankAccountRepositories.save(bankAccount);
             }
         };
+    }
+
+    // swagger configuration
+    @Bean
+    public OpenAPI usersMicroserviceOpenAPI(){
+        return new OpenAPI().info(new Info().title("microservice for product")
+                .description("this is microservide for product application")
+                .version("1.0"));
     }
 
 }
