@@ -4,6 +4,7 @@ package com.sid.ebankservice.web;
 import com.sid.ebankservice.dto.BankAccountRequestDTO;
 import com.sid.ebankservice.dto.BankAccountResponseDTO;
 import com.sid.ebankservice.entities.BankAccount;
+import com.sid.ebankservice.mappers.AccountMapper;
 import com.sid.ebankservice.repositories.BankAccountRepositories;
 import com.sid.ebankservice.service.AccountService;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +18,11 @@ import java.util.UUID;
 public class AccountRestController {
     private BankAccountRepositories bankAccountRepositories;
     private AccountService accountService;
-    public AccountRestController(BankAccountRepositories bankAccountRepositories,AccountService accountService){
+    private AccountMapper accountMapper;
+    public AccountRestController(BankAccountRepositories bankAccountRepositories,AccountService accountService,AccountMapper accountMapper){
         this.bankAccountRepositories=bankAccountRepositories;
         this.accountService=accountService;
+        this.accountMapper=accountMapper;
     }
 
     @GetMapping("/bankAccounts")

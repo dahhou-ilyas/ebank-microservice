@@ -3,6 +3,7 @@ package com.sid.ebankservice.service;
 import com.sid.ebankservice.dto.BankAccountRequestDTO;
 import com.sid.ebankservice.dto.BankAccountResponseDTO;
 import com.sid.ebankservice.entities.BankAccount;
+import com.sid.ebankservice.mappers.AccountMapper;
 import com.sid.ebankservice.repositories.BankAccountRepositories;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,8 +16,10 @@ import java.util.UUID;
 @Transactional
 public class AccountServiceImpl implements AccountService {
     private BankAccountRepositories bankAccountRepositories;
-    public AccountServiceImpl(BankAccountRepositories bankAccountRepositories){
+    private AccountMapper accountMapper;
+    public AccountServiceImpl(BankAccountRepositories bankAccountRepositories,AccountMapper accountMapper){
         this.bankAccountRepositories=bankAccountRepositories;
+        this.accountMapper=accountMapper;
     }
     @Override
     public BankAccountResponseDTO addAccount(BankAccountRequestDTO bankAccountDTO) {
@@ -28,13 +31,7 @@ public class AccountServiceImpl implements AccountService {
                 .currency(bankAccountDTO.getCurrency())
                 .build();
         BankAccount savedBankAccount= bankAccountRepositories.save(bankAccount);
-        BankAccountResponseDTO responseDTO=BankAccountResponseDTO.builder()
-                .balance(bankAccount.getBalance())
-                .createdAt(bankAccount.getCreatedAt())
-                .currency(bankAccount.getCurrency())
-                .type(bankAccount.getType())
-                .id(bankAccount.getId())
-                .build();
+        BankAccountResponseDTO responseDTO=accountMapper.fromBankAccount(savedBankAccount);
         return responseDTO;
     }
 }
