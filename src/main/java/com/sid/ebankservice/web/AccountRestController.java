@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
+@RequestMapping("/api")
 public class AccountRestController {
     private BankAccountRepositories bankAccountRepositories;
     public AccountRestController(BankAccountRepositories bankAccountRepositories){
@@ -29,6 +31,7 @@ public class AccountRestController {
 
     @PostMapping("/bankAccounts")
     public BankAccount save(@RequestBody BankAccount bankAccount){
+        if (bankAccount.getId()==null) bankAccount.setId(UUID.randomUUID().toString());
         return bankAccountRepositories.save(bankAccount);
     }
 
@@ -37,7 +40,7 @@ public class AccountRestController {
     public BankAccount update(@PathVariable String id,@RequestBody BankAccount bankAccount){
         BankAccount bankAccount1=bankAccountRepositories.findById(id).orElseThrow(()->new RuntimeException(String.format("Account not found")));
         if (bankAccount.getBalance()!=null) bankAccount1.setBalance(bankAccount.getBalance());
-        if (bankAccount.getCreatedAt()!=null) bankAccount1.setCreatedAt(new Date());
+        if (bankAccount.getCreatedAt()==null) bankAccount1.setCreatedAt(new Date());
         if (bankAccount.getType()!=null) bankAccount1.setType(bankAccount.getType());
         if (bankAccount.getCurrency()!=null) bankAccount1.setCurrency(bankAccount.getCurrency());
         return bankAccountRepositories.save(bankAccount);
