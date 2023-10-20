@@ -1,8 +1,11 @@
 package com.sid.ebankservice.web;
 
 
+import com.sid.ebankservice.dto.BankAccountRequestDTO;
+import com.sid.ebankservice.dto.BankAccountResponseDTO;
 import com.sid.ebankservice.entities.BankAccount;
 import com.sid.ebankservice.repositories.BankAccountRepositories;
+import com.sid.ebankservice.service.AccountService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -13,9 +16,10 @@ import java.util.UUID;
 @RequestMapping("/api")
 public class AccountRestController {
     private BankAccountRepositories bankAccountRepositories;
-    public AccountRestController(BankAccountRepositories bankAccountRepositories){
+    private AccountService accountService;
+    public AccountRestController(BankAccountRepositories bankAccountRepositories,AccountService accountService){
         this.bankAccountRepositories=bankAccountRepositories;
-
+        this.accountService=accountService;
     }
 
     @GetMapping("/bankAccounts")
@@ -30,9 +34,8 @@ public class AccountRestController {
     }
 
     @PostMapping("/bankAccounts")
-    public BankAccount save(@RequestBody BankAccount bankAccount){
-        if (bankAccount.getId()==null) bankAccount.setId(UUID.randomUUID().toString());
-        return bankAccountRepositories.save(bankAccount);
+    public BankAccountResponseDTO save(@RequestBody BankAccountRequestDTO bankAccountRequestDTO){
+        return accountService.addAccount(bankAccountRequestDTO);
     }
 
     //on a fait put et patch dans le meme temps

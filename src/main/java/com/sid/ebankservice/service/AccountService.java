@@ -5,5 +5,5 @@ import com.sid.ebankservice.dto.BankAccountResponseDTO;
 import com.sid.ebankservice.entities.BankAccount;
 
 public interface AccountService {
-    public BankAccountResponseDTO addAccount(BankAccountRequestDTO bankAccountDTO);
+    BankAccountResponseDTO addAccount(BankAccountRequestDTO bankAccountDTO);
 }
