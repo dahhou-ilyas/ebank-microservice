@@ -43,7 +43,7 @@ public class AccountRestController {
         return bankAccountRepositories.save(bankAccount);
     }
 
-    @GetMapping("/bankAccounts/{id}")
+    @DeleteMapping("/bankAccounts/{id}")
     public void deleteAccount(@PathVariable String id){
         bankAccountRepositories.deleteById(id);
     }
