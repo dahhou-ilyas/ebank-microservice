@@ -3,6 +3,7 @@ package com.sid.ebankservice.service;
 import com.sid.ebankservice.dto.BankAccountRequestDTO;
 import com.sid.ebankservice.dto.BankAccountResponseDTO;
 import com.sid.ebankservice.entities.BankAccount;
+import com.sid.ebankservice.entities.Customer;
 import com.sid.ebankservice.mappers.AccountMapper;
 import com.sid.ebankservice.repositories.BankAccountRepositories;
 import org.springframework.stereotype.Service;
@@ -37,12 +38,14 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public BankAccountResponseDTO updateAccount(String id,BankAccountRequestDTO bankAccountDTO) {
+        Customer customer=bankAccountRepositories.findById(id).orElseThrow(() -> new RuntimeException("account not found")).getCustomer();
         BankAccount bankAccount=BankAccount.builder()
                 .id(id)
                 .createdAt(new Date())
                 .balance(bankAccountDTO.getBalance())
                 .type(bankAccountDTO.getType())
                 .currency(bankAccountDTO.getCurrency())
+                .customer(customer)
                 .build();
         BankAccount savedBankAccount= bankAccountRepositories.save(bankAccount);
         BankAccountResponseDTO responseDTO=accountMapper.fromBankAccount(savedBankAccount);
