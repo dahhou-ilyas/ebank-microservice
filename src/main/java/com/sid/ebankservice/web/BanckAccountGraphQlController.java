@@ -3,8 +3,10 @@ package com.sid.ebankservice.web;
 import com.sid.ebankservice.dto.BankAccountRequestDTO;
 import com.sid.ebankservice.dto.BankAccountResponseDTO;
 import com.sid.ebankservice.entities.BankAccount;
+import com.sid.ebankservice.entities.Customer;
 import com.sid.ebankservice.enums.AccountType;
 import com.sid.ebankservice.repositories.BankAccountRepositories;
+import com.sid.ebankservice.repositories.CustomerRepository;
 import com.sid.ebankservice.service.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -20,6 +22,8 @@ public class BanckAccountGraphQlController {
     private BankAccountRepositories bankAccountRepositories;
     @Autowired
     private AccountServiceImpl accountService;
+    @Autowired
+    private CustomerRepository customerRepository;
     //tout les requet de graphql est de type post
     @QueryMapping
     public List<BankAccount> accounts(){ //il faut donné le meme le noms dans le query graphql
@@ -45,5 +49,9 @@ public class BanckAccountGraphQlController {
     public boolean deleteAccount(@Argument String id){
         bankAccountRepositories.deleteById(id);
         return true;
+    }
+    @QueryMapping
+    public List<Customer> customers(){
+        return customerRepository.findAll();
     }
 }

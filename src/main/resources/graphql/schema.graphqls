@@ -1,6 +1,7 @@
 type Query{
     accounts: [BankAccount],
     bankAccountById (id:String):BankAccount
+    customers :[Customer]
 
 }
 type Mutation {
