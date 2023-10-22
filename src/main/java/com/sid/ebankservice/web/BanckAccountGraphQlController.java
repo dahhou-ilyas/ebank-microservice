@@ -1,9 +1,11 @@
 package com.sid.ebankservice.web;
 
 import com.sid.ebankservice.entities.BankAccount;
+import com.sid.ebankservice.enums.AccountType;
 import com.sid.ebankservice.repositories.BankAccountRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
@@ -24,4 +26,12 @@ public class BanckAccountGraphQlController {
         return bankAccountRepositories.findById(id)
                 .orElseThrow(()->new RuntimeException("Account not found"));
     }
+
+    @MutationMapping
+    public BankAccount addAccount(@Argument BankAccount account){
+        return bankAccountRepositories.save(account);
+    }
+}
+record BankAccountDTO(Double balance, AccountType type, String currency){
+
 }
