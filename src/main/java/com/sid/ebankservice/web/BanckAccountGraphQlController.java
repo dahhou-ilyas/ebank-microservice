@@ -1,8 +1,11 @@
 package com.sid.ebankservice.web;
 
+import com.sid.ebankservice.dto.BankAccountRequestDTO;
+import com.sid.ebankservice.dto.BankAccountResponseDTO;
 import com.sid.ebankservice.entities.BankAccount;
 import com.sid.ebankservice.enums.AccountType;
 import com.sid.ebankservice.repositories.BankAccountRepositories;
+import com.sid.ebankservice.service.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -15,7 +18,8 @@ import java.util.List;
 public class BanckAccountGraphQlController {
     @Autowired
     private BankAccountRepositories bankAccountRepositories;
-
+    @Autowired
+    private AccountServiceImpl accountService;
     //tout les requet de graphql est de type post
     @QueryMapping
     public List<BankAccount> accounts(){ //il faut donné le meme le noms dans le query graphql
@@ -28,10 +32,7 @@ public class BanckAccountGraphQlController {
     }
 
     @MutationMapping
-    public BankAccount addAccount(@Argument BankAccount account){
-        return bankAccountRepositories.save(account);
+    public BankAccountResponseDTO addAccount(@Argument BankAccountRequestDTO bankAccountDTO){
+        return accountService.addAccount(bankAccountDTO);
     }
-}
-record BankAccountDTO(Double balance, AccountType type, String currency){
-
 }
