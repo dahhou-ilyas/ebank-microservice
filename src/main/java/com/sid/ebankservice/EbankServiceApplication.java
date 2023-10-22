@@ -32,16 +32,19 @@ public class EbankServiceApplication {
                         .build();
                 customerRepository.save(customer);
             });
-            for (int i=0;i<10;i++){
-                BankAccount bankAccount=BankAccount.builder()
-                        .id(UUID.randomUUID().toString())
-                        .type(Math.random()>0.5? AccountType.SAVING_ACCOUNT:AccountType.CURRENT_ACCOUNT)
-                        .balance(20020+Math.random()*90000)
-                        .createdAt(new Date())
-                        .currency("USD")
-                        .build();
-                bankAccountRepositories.save(bankAccount);
-            }
+            customerRepository.findAll().forEach(customer -> {
+                for (int i=0;i<6;i++){
+                    BankAccount bankAccount=BankAccount.builder()
+                            .id(UUID.randomUUID().toString())
+                            .type(Math.random()>0.5? AccountType.SAVING_ACCOUNT:AccountType.CURRENT_ACCOUNT)
+                            .balance(20020+Math.random()*90000)
+                            .createdAt(new Date())
+                            .currency("USD")
+                            .customer(customer)
+                            .build();
+                    bankAccountRepositories.save(bankAccount);
+                }
+            });
         };
     }
 
