@@ -1,10 +1,12 @@
 type Query{
-    accounts: [BankAccount]
+    accounts: [BankAccount],
     bankAccountById (id:String):BankAccount
 
 }
 type Mutation {
-    addAccount(bankAccountDTO:BankAccountDTO):BankAccount
+    addAccount(bankAccount:BankAccountDTO):BankAccount,
+    updateAccount(id:String,bankAccount:BankAccountDTO):BankAccount,
+    deleteAccount(id:String):Boolean
 }
 
 type BankAccount{
