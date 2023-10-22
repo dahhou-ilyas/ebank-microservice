@@ -1,8 +1,10 @@
 package com.sid.ebankservice;
 
 import com.sid.ebankservice.entities.BankAccount;
+import com.sid.ebankservice.entities.Customer;
 import com.sid.ebankservice.enums.AccountType;
 import com.sid.ebankservice.repositories.BankAccountRepositories;
+import com.sid.ebankservice.repositories.CustomerRepository;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import org.springframework.boot.CommandLineRunner;
@@ -12,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.Date;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @SpringBootApplication
 public class EbankServiceApplication {
@@ -21,8 +24,14 @@ public class EbankServiceApplication {
     }
 
     @Bean
-    CommandLineRunner start(BankAccountRepositories bankAccountRepositories){
+    CommandLineRunner start(BankAccountRepositories bankAccountRepositories, CustomerRepository customerRepository){
         return args -> {
+            Stream.of("Mohamed","Yassin","taha","Ilyas","Sara","Oumaima").forEach(c->{
+                Customer customer=Customer.builder()
+                        .name(c)
+                        .build();
+                customerRepository.save(customer);
+            });
             for (int i=0;i<10;i++){
                 BankAccount bankAccount=BankAccount.builder()
                         .id(UUID.randomUUID().toString())
