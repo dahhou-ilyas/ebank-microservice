@@ -1,5 +1,6 @@
 package com.sid.ebankservice.web;
 
+import com.sid.ebankservice.dto.BankAccountDTOForAdd;
 import com.sid.ebankservice.dto.BankAccountRequestDTO;
 import com.sid.ebankservice.dto.BankAccountResponseDTO;
 import com.sid.ebankservice.entities.BankAccount;
@@ -36,7 +37,7 @@ public class BanckAccountGraphQlController {
     }
 
     @MutationMapping
-    public BankAccountResponseDTO addAccount(@Argument BankAccountRequestDTO bankAccount){
+    public BankAccountResponseDTO addAccount(@Argument BankAccountDTOForAdd bankAccount){
         return accountService.addAccount(bankAccount);
     }
 

@@ -5,7 +5,7 @@ type Query{
 
 }
 type Mutation {
-    addAccount(bankAccount:BankAccountDTO):BankAccount,
+    addAccount(bankAccount:BankAccountDTOForAdd):BankAccount,
     updateAccount(id:String,bankAccount:BankAccountDTO):BankAccount,
     deleteAccount(id:String):Boolean
 }
@@ -18,6 +18,16 @@ type BankAccount{
     currency: String,
     type: String,
     customer: Customer
+}
+input BankAccountDTOForAdd{
+    balance:Float,
+    currency: String,
+    type: String,
+    customer:Customerr
+}
+
+input Customerr{
+    name:String,
 }
 
 type Customer{

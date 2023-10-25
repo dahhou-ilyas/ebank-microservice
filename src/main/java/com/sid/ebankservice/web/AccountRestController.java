@@ -1,6 +1,7 @@
 package com.sid.ebankservice.web;
 
 
+import com.sid.ebankservice.dto.BankAccountDTOForAdd;
 import com.sid.ebankservice.dto.BankAccountRequestDTO;
 import com.sid.ebankservice.dto.BankAccountResponseDTO;
 import com.sid.ebankservice.entities.BankAccount;
@@ -37,7 +38,7 @@ public class AccountRestController {
     }
 
     @PostMapping("/bankAccounts")
-    public BankAccountResponseDTO save(@RequestBody BankAccountRequestDTO bankAccountRequestDTO){
+    public BankAccountResponseDTO save(@RequestBody BankAccountDTOForAdd bankAccountRequestDTO){
         return accountService.addAccount(bankAccountRequestDTO);
     }
 
